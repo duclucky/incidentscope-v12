@@ -160,6 +160,34 @@ describe("genlayer contract adapter", () => {
     expect(stages).toEqual(["SUBMITTED", "ACCEPTED", "FAILED"]);
   });
 
+  it("accepts finalized Studio SUCCESS receipts without the normalized execution enum", async () => {
+    const provider: Eip1193Provider = { request: vi.fn(async () => "0xf22f") };
+    const stages: TransactionStage[] = [];
+    const client = fakeClient({
+      waitForTransactionReceipt: vi.fn(async ({ status }) => ({
+        statusName: status,
+        txExecutionResultName: status === "FINALIZED" ? undefined : "NOT_VOTED",
+        execution_result: status === "FINALIZED" ? "SUCCESS" : undefined,
+        resultName: status === "FINALIZED" ? "MAJORITY_AGREE" : undefined,
+      })),
+    });
+    const adapter = createGenLayerContractAdapter({
+      contractAddress: ADDRESS,
+      account: ACCOUNT,
+      provider,
+      createClient: () => client,
+      onTransactionStage: (event) => stages.push(event.stage),
+    });
+    const result = await adapter.createPool({
+      title: "Agent API pool",
+      incidentUrl: "https://status.openai.com/incidents/01KZSC0T66YTVM57N5T79SV8ZV",
+      enrollmentClosesAt: "2026-08-22T00:00:00.000Z",
+      reserveGen: 1,
+    });
+    expect(result).toEqual({ status: "FINALIZED", transactionHash: HASH, poolId: "pool-1" });
+    expect(stages).toEqual(["SUBMITTED", "ACCEPTED", "FINALIZED"]);
+  });
+
   it("maps every lifecycle write to the matching contract entrypoint", async () => {
     const provider: Eip1193Provider = { request: vi.fn(async () => "0xf22f") };
     const client = fakeClient();

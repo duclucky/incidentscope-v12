@@ -130,6 +130,37 @@ function isTransactionHash(value: unknown): value is Address {
 }
 
 
+function firstLeaderExecution(receipt: Record<string, unknown>): unknown {
+  const consensus = receipt.consensus_data;
+  if (typeof consensus !== "object" || consensus === null) return undefined;
+  const leaders = (consensus as Record<string, unknown>).leader_receipt;
+  if (!Array.isArray(leaders) || leaders.length === 0) return undefined;
+  const first = leaders[0];
+  if (typeof first !== "object" || first === null) return undefined;
+  return (first as Record<string, unknown>).execution_result;
+}
+
+
+function executionResult(receipt: Record<string, unknown>): unknown {
+  return receipt.txExecutionResultName
+    ?? receipt.executionResultName
+    ?? receipt.execution_result
+    ?? firstLeaderExecution(receipt);
+}
+
+
+function consensusResult(receipt: Record<string, unknown>): unknown {
+  return receipt.resultName ?? receipt.result_name ?? receipt.consensusResultName;
+}
+
+
+function isSuccessfulFinalizedReceipt(receipt: Record<string, unknown>): boolean {
+  const execution = executionResult(receipt);
+  if (execution === ExecutionResult.FINISHED_WITH_RETURN) return true;
+  return execution === "SUCCESS" && consensusResult(receipt) === "MAJORITY_AGREE";
+}
+
+
 function parseJson<T>(value: unknown): T {
   if (typeof value === "string") return JSON.parse(value) as T;
   if (typeof value === "object" && value !== null) return value as T;
@@ -373,7 +404,7 @@ export function createGenLayerContractAdapter(options: AdapterOptions): Contract
         message: "Consensus accepted the transaction; finality is pending.",
       });
       const receipt = await writeClient.waitForTransactionReceipt({ hash: transactionHash, status: TransactionStatus.FINALIZED });
-      if (receipt.txExecutionResultName !== ExecutionResult.FINISHED_WITH_RETURN) {
+      if (!isSuccessfulFinalizedReceipt(receipt)) {
         options.onTransactionStage?.({ ...eventBase, stage: "FAILED", message: "The finalized transaction did not execute successfully." });
         return { status: "REJECTED", message: "The transaction finalized with an execution error." };
       }
