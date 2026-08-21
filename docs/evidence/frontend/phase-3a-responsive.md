@@ -8,8 +8,8 @@ state claim.
 
 ## Public artifacts
 
-- GitHub: https://github.com/duclucky/incidentscope
-- Vercel alias: https://incidentscope.vercel.app
+- GitHub: https://github.com/duclucky/incidentscope-v12
+- Vercel alias: https://incidentscope-v12.vercel.app
 - First deployment ID: `dpl_FYL47q5QRCP7xiJF46J1Q3mZbfVL`
 - First deployment state reported by Vercel CLI: `READY`
 

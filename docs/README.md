@@ -9,10 +9,12 @@
 
 - Idea ID: IDEA-017
 - Project name: IncidentScope
-- Project slug: `incidentscope`
+- Project slug: `incidentscope-v12`
 - Category: Projects
-- Status: BUILDING
-- Repository: https://github.com/duclucky/incidentscope
+- Status: DEPLOYED
+- Repository: https://github.com/duclucky/incidentscope-v12
+- Live app: https://incidentscope-v12.vercel.app
+- Studionet contract: `0xEAde9Cf8B12022b96e35c042e12f45E476706177`
 - Target network: Studionet (locked decision D1)
 
 ## One-sentence product hook
@@ -311,13 +313,13 @@ This is a user-visible capability boundary, not an internal storage design.
 | `ENROLLING` | Sponsor locks legal snapshot | `lock_enrollment` | `PoolActionPanel` lock control | role/state tests in `PoolDetailComponents.test.tsx` | Local UI tested; canonical timing integration/network pending |
 | `LOCKED` | Sponsor requests official review | `request_review` | `PoolActionPanel` review control + transaction notices | pool action and transaction lifecycle tests | Local UI tested; nondet/Studionet evidence pending |
 | `RETRYABLE` | Sponsor retries fresh attempt | `retry_review` | `PoolActionPanel` retry control | retry role/state and lifecycle tests | Local UI tested; source-failure network evidence pending |
-| `DECIDED` | Impacted integrator withdraws once | `withdraw_credit` | `PoolActionPanel` withdrawal control | class/role/duplicate visibility tests | Local UI tested; receipt/balance proof pending |
-| `DECIDED` | Sponsor recovers only legal remainder/expired value | `recover_reserve` | `PoolActionPanel` recovery control | canonical-action recovery test in `PoolDetailComponents.test.tsx` | Local UI tested; receipt/balance proof pending Phase 8 |
-| `ENROLLING|LOCKED|RETRYABLE` safe path | Sponsor cancels | `cancel_pool` | `PoolActionPanel` contextual cancel control | canonical-action cancellation test in `PoolDetailComponents.test.tsx` | Local UI tested; refund proof pending Phase 8 |
+| `DECIDED` | Impacted integrator withdraws once | `withdraw_credit` | `PoolActionPanel` withdrawal control | class/role/duplicate visibility tests | Studionet lifecycle: `WITHDRAW` finalized and integrator balance increased 2 GEN |
+| `DECIDED` | Sponsor recovers only legal remainder/expired value | `recover_reserve` | `PoolActionPanel` recovery control | canonical-action recovery test in `PoolDetailComponents.test.tsx` | Studionet lifecycle: `RECOVER` finalized and pool closed with zero outstanding accounting |
+| `ENROLLING|LOCKED|RETRYABLE` safe path | Sponsor cancels | `cancel_pool` | `PoolActionPanel` contextual cancel control | canonical-action cancellation test in `PoolDetailComponents.test.tsx` | Local UI tested; cancellation was not needed in the successful v1.2 lifecycle |
 | Any canonical phase | Read pool/profile/accounting after finality | no write | Pools, Pool detail, Dependencies, Activity | route/adapter/finality reload tests | Honest unconfigured adapter tested; real reads pending Phase 7 |
 | Wallet disconnected/wrong network | Select provider, switch/add chain, or disconnect | wallet provider API, not contract | wallet picker/account menu/settings | wallet discovery/selection/disconnect tests | Local browser tested; real extension and network proof pending |
 
-No script-only write is claimed as a browser-complete product step. Phase 4 interface corrections are implemented and locally tested; contract, adapter, wallet, and network evidence remain explicitly pending.
+No script-only write is claimed as a browser-complete product step. Contract, adapter, wallet, deployment, and consequential Studionet lifecycle evidence are implemented; real extension-signed browser transaction evidence remains a separate proof item.
 
 ## Evidence policy
 
@@ -506,13 +508,13 @@ Rationale is optional validator diagnostics only, bounded, non-consensus-critica
 
 | Claim | Contract method/state | View/read | Test | Network evidence |
 | --- | --- | --- | --- | --- |
-| Sponsor pre-funds only 1 or 2 GEN | `create_pool`, `ENROLLING`, reserve ledger | `get_pool`, `get_pool_accounting` | exact-value/payable/accounting tests | Phase 8 create receipt plus allowlisted value/balance evidence |
-| No claimant can unilaterally invent eligibility | `invite_dependency` + `accept_dependency` immutable profile | `get_account_profile`, `get_profile` | wrong caller/substitution/duplicate/late tests | Phase 8 two-wallet invitation and acceptance receipts/state reads |
-| Validators inspect the exact official incident page | `request_review`/`retry_review`, policy/digest invariants | `get_current_attempt`, pool incident URL/policy | origin/path/redirect/digest/independent replay tests | Phase 8 accepted attempt with safe URL/policy/digest projection |
-| Every accepted profile is classified exactly once | settlement exact-set invariant, `DECIDED` | pool counts and `get_profile` | extra/missing/duplicate/foreign ID tests | Phase 8 finalized profile/count reads |
-| Invalid or unavailable evidence never moves credit | `RETRYABLE`; no accounting mutation | attempt status and accounting | source/schema/semantic failure tests | Phase 8 retryable attempt if safely reproducible; otherwise documented local-only limit |
-| Only impacted profiles open deterministic credits | validated verdict-to-credit derivation | own profile/withdrawable/accounting | all classes, zero/all/partial impacted | Phase 8 finalized class/credit state |
-| Credits and reserve cannot pay twice or become orphaned | withdraw/recover/cancel ledgers and terminal phases | accounting/invariant/withdrawn/terminal views | duplicates, expiry, failed transfer, zero outstanding | Phase 8 withdrawal/recovery receipts and final zero accounting |
+| Sponsor pre-funds only 1 or 2 GEN | `create_pool`, `ENROLLING`, reserve ledger | `get_pool`, `get_pool_accounting` | exact-value/payable/accounting tests | `lifecycle.json` create receipt plus allowlisted value/balance evidence |
+| No claimant can unilaterally invent eligibility | `invite_dependency` + `accept_dependency` immutable profile | `get_account_profile`, `get_profile` | wrong caller/substitution/duplicate/late tests | `lifecycle.json` two-wallet invitation and acceptance receipts/state reads |
+| Validators inspect the exact official incident page | `request_review`/`retry_review`, policy/digest invariants | `get_current_attempt`, pool incident URL/policy | origin/path/redirect/digest/independent replay tests | `lifecycle.json` verified attempt with safe URL/policy/digest projection |
+| Every accepted profile is classified exactly once | settlement exact-set invariant, `DECIDED` | pool counts and `get_profile` | extra/missing/duplicate/foreign ID tests | `lifecycle.json` finalized profile/count reads |
+| Invalid or unavailable evidence never moves credit | `RETRYABLE`; no accounting mutation | attempt status and accounting | source/schema/semantic failure tests | Local adversarial coverage; live v1.2 path was `VERIFIED` |
+| Only impacted profiles open deterministic credits | validated verdict-to-credit derivation | own profile/withdrawable/accounting | all classes, zero/all/partial impacted | `lifecycle.json` finalized `IMPACTED` class and 2 GEN credit state |
+| Credits and reserve cannot pay twice or become orphaned | withdraw/recover/cancel ledgers and terminal phases | accounting/invariant/withdrawn/terminal views | duplicates, expiry, failed transfer, zero outstanding | `lifecycle.json` withdrawal/recovery receipts and final zero accounting |
 | Frontend uses explicit wallet selection and canonical reload | frontend adapter around exact writes/views | all user-facing views | wallet, lifecycle, adapter, route, accessibility tests | Phase 13 browser wallet transaction/finality/read evidence |
 | Product decides stated incident scope, not real downtime/SLA | no traffic/damages inputs or verdict fields | Help and pool evidence boundary | schema rejects extra claims; copy tests | README/live UI and contract schema/source evidence |
 
@@ -541,24 +543,25 @@ Rationale is optional validator diagnostics only, bounded, non-consensus-critica
 
 ### Intelligent Contract primitive
 
-- [ ] Exactly one project-specific `gl.Contract` subclass with correct header/Depends and ASCII source.
-- [ ] Reusable typed pool/profile/accounting interface.
-- [ ] Validator-independent semantic review using the locked nondeterminism API.
-- [ ] Direct deterministic consequence from accepted exact impact set.
-- [ ] Settlement, authenticity, temporal, idempotency, and no-orphan invariants covered by adversarial tests.
-- [ ] `genvm-lint check`, direct tests, and bounded Studionet lifecycle pass.
+- [x] Exactly one project-specific `gl.Contract` subclass with correct header/Depends and ASCII source.
+- [x] Reusable typed pool/profile/accounting interface.
+- [x] Validator-independent semantic review using the locked nondeterminism API.
+- [x] Direct deterministic consequence from accepted exact impact set.
+- [x] Settlement, authenticity, temporal, idempotency, and no-orphan invariants covered by adversarial tests.
+- [x] `genvm-lint check`, direct tests, and bounded Studionet lifecycle pass.
 
 ### Projects product
 
 - [x] Complete frontend route/product baseline built before contract implementation.
 - [x] Explicit wallet selection, disconnect, honest unconfigured states, responsive layout, and frontend tests.
-- [ ] Real `genlayer-js` write wrappers for every claimed browser action.
-- [ ] Separate EVM wallet write path and GenLayer IC canonical read path with browser-local CORS proof.
-- [ ] Submitted, accepted/decided, finalized, failed, and retryable lifecycle plus canonical reload.
-- [ ] Real frontend wallet write and full consequential lifecycle on Studionet.
-- [ ] Canonical state/accounting/history reads and meaningful withdrawal/recovery outcome.
+- [x] Real `genlayer-js` write wrappers for every claimed browser action.
+- [x] Separate EVM wallet write path and GenLayer IC canonical read path with browser-local CORS proof.
+- [x] Submitted, accepted/decided, finalized, failed, and retryable lifecycle plus canonical reload.
+- [ ] Real extension-signed frontend wallet transaction proof.
+- [x] Full consequential lifecycle on Studionet.
+- [x] Canonical state/accounting/history reads and meaningful withdrawal/recovery outcome.
 - [ ] Browser evidence at 375/768/1024/1440 and real wallet/network interaction.
-- [ ] Primary UI exposes only user-relevant data/actions; raw prompt/payload/config/storage remains hidden.
+- [x] Primary UI exposes only user-relevant data/actions; raw prompt/payload/config/storage remains hidden.
 - [ ] Public GitHub, successful CI, Vercel production, English audit, final README, and Projects precheck `NO BLOCKER`.
 
 ## Honest limitations

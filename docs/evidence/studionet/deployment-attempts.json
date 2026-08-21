@@ -2,29 +2,29 @@
   "network": "studionet",
   "attempts": [
     {
-      "transactionHash": "0x4453adaa3441744068c90cc2521dbda316bce6f0928376d84a7d9a8f5e7b3cf2",
+      "transactionHash": "0xa8790193a2ced11618f62f6b0038b71e7317f7094c95d8b8b915251bb5e71386",
       "network": "studionet",
       "chainId": 61999,
       "rpc": "https://studio.genlayer.com/api",
-      "sourceCommit": "8125fb70b45cb18fbddcf7513ff3f24a65293a33",
-      "sourceSha256": "2aef8a1137e10b386cffecf4e3afbc3fe157a4e6602444092adb0cd1ceb485e0",
+      "sourceCommit": "5e890d9f2cfa1c9fd7c34a1a11b499ed252e4d5a",
+      "sourceSha256": "b32ecf099d927d99ea56e3a4bf7ca42071fb46cb4f12d25576e8a3b88e399a63",
       "depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
       "deployer": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
       "status": "FINALIZED",
-      "submittedAt": "2026-08-21T10:23:46.732Z",
+      "submittedAt": "2026-08-21T11:11:38.012Z",
       "balanceBeforeGEN": "1991.6399969999999882",
-      "acceptedAt": "2026-08-21T10:23:54.644Z",
+      "acceptedAt": "2026-08-21T11:11:45.795Z",
       "receipt": {
         "label": "deploy",
-        "transactionHash": "0x4453adaa3441744068c90cc2521dbda316bce6f0928376d84a7d9a8f5e7b3cf2",
+        "transactionHash": "0xa8790193a2ced11618f62f6b0038b71e7317f7094c95d8b8b915251bb5e71386",
         "status": "FINALIZED",
         "txExecutionResult": "SUCCESS",
         "consensusResult": "MAJORITY_AGREE",
-        "contractAddress": "0x29431b250eCbA5b012bFA054236eb1CbF51821b3"
+        "contractAddress": "0xEAde9Cf8B12022b96e35c042e12f45E476706177"
       },
       "result": "SUCCESS",
-      "finalizedAt": "2026-08-21T10:24:24.221Z",
-      "contractAddress": "0x29431b250eCbA5b012bFA054236eb1CbF51821b3"
+      "finalizedAt": "2026-08-21T11:12:15.502Z",
+      "contractAddress": "0xEAde9Cf8B12022b96e35c042e12f45E476706177"
     }
   ]
 }

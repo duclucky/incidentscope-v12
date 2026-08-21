@@ -5,7 +5,8 @@ consensus to decide which pre-committed service dependencies are materially
 covered by an official incident notice before a funded GEN reserve becomes
 withdrawable credit.
 
-Status: `SELECTED`. Contract source, tests, deployment, browser-wallet evidence,
-public repository, live app, and Portal submission are not yet claimed.
+Status: `DEPLOYED`. Contract source, tests, Studionet deployment/lifecycle,
+public repository, and live Vercel app are available. Portal submission remains
+pending final audit.
 
-The detailed product and contract specification will live in `docs/README.md`.
+The detailed product and contract specification lives in `docs/README.md`.
