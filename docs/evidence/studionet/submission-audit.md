@@ -120,6 +120,24 @@ rpcBody={"jsonrpc":"2.0","result":"0xf22f","id":91}
 liveBundleContainsContractAddress=True
 ```
 
+## Browser wallet proof
+
+Source file:
+
+- `docs/evidence/frontend/browser-wallet-proof.md`
+
+Observed public result:
+
+```text
+Chrome + OKX Wallet connected as 0xc495...8272
+Browser wallet transaction reached Submitted and Accepted - finality pending in the live UI
+Canonical state then showed pool-2 created by 0xc495ef51618d03267a1f227afe5b27b38c748272
+pool-2 title=Browser wallet proof pool
+pool-2 phase=ENROLLING
+pool-2 reserve=1 GEN
+Live /pools page showed Browser wallet proof pool / pool-2 / Open for dependency acceptance / 1 GEN
+```
+
 ## Pre-submission gate proof
 
 Command:
