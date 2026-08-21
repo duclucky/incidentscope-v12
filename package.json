@@ -1,0 +1,22 @@
+{
+  "name": "incidentscope",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "check": "npm run check:contract && npm run check:tests && npm run check:deployment && npm run check:frontend",
+    "check:contract": "set PYTHONUTF8=1&& .venv\\Scripts\\genvm-lint.exe check contracts/incidentscope.py",
+    "check:tests": ".venv\\Scripts\\python.exe -m pytest tests -q",
+    "check:deployment": "node --test tests/deployment/*.test.mjs",
+    "studionet:inspect": "node scripts/studionet.mjs inspect",
+    "studionet:deploy": "node scripts/studionet.mjs deploy",
+    "studionet:supersede": "node scripts/studionet.mjs supersede",
+    "studionet:recover": "node scripts/studionet.mjs recover-superseded",
+    "studionet:recover-active": "node scripts/studionet.mjs recover-active",
+    "studionet:lifecycle": "node scripts/studionet.mjs lifecycle",
+    "check:frontend": "cd frontend && npm test && npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "genlayer-js": "1.1.8"
+  }
+}

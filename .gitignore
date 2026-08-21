@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.venv/
+node_modules/
+dist/
+coverage/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.log
+*.tsbuildinfo
+.vercel/
+frontend/vite.config.js
+frontend/vite.config.d.ts
+docs/evidence/*/*.local.json

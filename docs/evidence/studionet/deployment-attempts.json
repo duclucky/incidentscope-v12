@@ -1,0 +1,30 @@
+{
+  "network": "studionet",
+  "attempts": [
+    {
+      "transactionHash": "0x4453adaa3441744068c90cc2521dbda316bce6f0928376d84a7d9a8f5e7b3cf2",
+      "network": "studionet",
+      "chainId": 61999,
+      "rpc": "https://studio.genlayer.com/api",
+      "sourceCommit": "8125fb70b45cb18fbddcf7513ff3f24a65293a33",
+      "sourceSha256": "2aef8a1137e10b386cffecf4e3afbc3fe157a4e6602444092adb0cd1ceb485e0",
+      "depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
+      "deployer": "0xC495ef51618D03267A1f227aFe5b27B38c748272",
+      "status": "FINALIZED",
+      "submittedAt": "2026-08-21T10:23:46.732Z",
+      "balanceBeforeGEN": "1991.6399969999999882",
+      "acceptedAt": "2026-08-21T10:23:54.644Z",
+      "receipt": {
+        "label": "deploy",
+        "transactionHash": "0x4453adaa3441744068c90cc2521dbda316bce6f0928376d84a7d9a8f5e7b3cf2",
+        "status": "FINALIZED",
+        "txExecutionResult": "SUCCESS",
+        "consensusResult": "MAJORITY_AGREE",
+        "contractAddress": "0x29431b250eCbA5b012bFA054236eb1CbF51821b3"
+      },
+      "result": "SUCCESS",
+      "finalizedAt": "2026-08-21T10:24:24.221Z",
+      "contractAddress": "0x29431b250eCbA5b012bFA054236eb1CbF51821b3"
+    }
+  ]
+}
