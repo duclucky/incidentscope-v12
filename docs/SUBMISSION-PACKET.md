@@ -12,10 +12,10 @@ IncidentScope — Validator-scoped incident credit pools
 
 ## Notes / Description
 
-Character count: 589
+Character count: 579
 
 ```text
-IncidentScope lets service providers fund a 1-2 GEN credit pool, then uses GenLayer validators to classify mutually accepted dependency profiles against an official incident page so only impacted integrators can withdraw credits. Validators independently fetch the allowlisted status source, agree on the exact impact set, and the contract enforces deterministic GEN accounting. Evidence includes one deployed Studionet contract, a completed 2 GEN lifecycle, browser wallet proof through OKX Wallet, 70 direct tests, 5 deployment parser tests, 53 frontend tests, CI, and Vercel production.
+IncidentScope is a GenLayer Projects dApp for incident-scope credit pools. Providers pre-fund a bounded reserve, integrators lock dependency profiles, and validators classify those profiles against an official incident page before credits become withdrawable. The contract makes the semantic beneficiary decision validator-controlled and enforces deterministic GEN accounting. Evidence includes a deployed Studionet contract, a completed lifecycle, browser wallet proof through OKX Wallet, 70 direct tests, 5 deployment parser tests, 53 frontend tests, CI, and Vercel production.
 ```
 
 ## Evidence
